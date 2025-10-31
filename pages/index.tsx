@@ -24,7 +24,8 @@ export default function Home() {
   const [destination, setDestination] = useState('吉祥寺');
   const [exception, setException] = useState(false);
   const [transport, setTransport] = useState<'電車' | 'バス'>('電車');
-  const [fare, setFare] = useState<number>(180);
+  // 入力時の「先頭0が消えない」問題を避けるため、文字列で管理
+  const [fareInput, setFareInput] = useState<string>('180');
   const [days, setDays] = useState<number[]>([]);
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -70,7 +71,11 @@ export default function Home() {
     setDays((prev) => prev.filter((d) => d <= dim));
   }, [yearNum, monthNum]);
 
-  const roundtrip = useMemo(() => Math.max(0, (Number.isFinite(fare) ? fare : 0) * 2), [fare]);
+  const fare = useMemo(() => {
+    const n = parseInt(fareInput || '0', 10);
+    return Number.isFinite(n) && n >= 0 ? n : 0;
+  }, [fareInput]);
+  const roundtrip = useMemo(() => Math.max(0, fare * 2), [fare]);
   const count = days.length;
   const total = roundtrip * count;
   const route = `${origin}-${destination}`;
@@ -254,13 +259,13 @@ export default function Home() {
           <div className="mb-4">
             <label className="label">片道運賃（円）</label>
             <input
-              type="number"
+              type="text"
               inputMode="numeric"
-              min={0}
-              step={10}
+              pattern="[0-9]*"
               className="input"
-              value={Number.isFinite(fare) ? fare : 0}
-              onChange={(e) => setFare(Number(e.target.value))}
+              value={fareInput}
+              onChange={(e) => setFareInput(e.target.value.replace(/[^0-9]/g, ''))}
+              placeholder="例: 180"
             />
           </div>
 
