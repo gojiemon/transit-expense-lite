@@ -102,17 +102,28 @@ export default function Home() {
       };
 
       if (GAS_ENDPOINT) {
+        // For GitHub Pages → GAS (cross-origin), avoid CORS errors.
+        // Use text/plain and no-cors. Response becomes opaque, so we optimistically treat it as success
+        // if the request does not throw at network layer.
         const r = await fetch(GAS_ENDPOINT, {
           method: 'POST',
+          mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'appendEntry', payload }),
         });
-        const data = await r.json();
-        if (r.ok && data?.ok) {
+        let ok = false;
+        try {
+          const data = await r.json();
+          ok = r.ok && !!data?.ok;
+        } catch {
+          // In no-cors mode, response is opaque. Assume success if no exception thrown above.
+          ok = true;
+        }
+        if (ok) {
           setToast({ type: 'success', message: `${count}日分（${total.toLocaleString()}円）を送信しました！` });
           setDays([]);
         } else {
-          throw new Error(data?.error || '送信に失敗しました');
+          throw new Error('送信に失敗しました');
         }
       } else {
         setToast({ type: 'success', message: `${count}日分（${total.toLocaleString()}円）を送信しました！（スタブ）` });
@@ -282,4 +293,3 @@ export default function Home() {
     </>
   );
 }
-
