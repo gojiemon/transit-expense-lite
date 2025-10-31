@@ -6,9 +6,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <link rel="manifest" href="/manifest.webmanifest?v=2" />
-        <link rel="icon" href="/icons/app-icon-180.png?v=2" sizes="180x180" type="image/png" />
-        <link rel="apple-touch-icon" href="/icons/app-icon-180.png?v=2" />
+        <link rel="manifest" href="/manifest.webmanifest?v=3" />
+        <link rel="icon" href="/icons/app-icon-180-v3.png" sizes="180x180" type="image/png" />
+        <link rel="apple-touch-icon" href="/icons/app-icon-180-v3.png" />
         <meta name="theme-color" content="#4f46e5" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
