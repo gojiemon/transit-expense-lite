@@ -24,8 +24,8 @@ export default function Home() {
   const [destination, setDestination] = useState('吉祥寺');
   const [exception, setException] = useState(false);
   const [transport, setTransport] = useState<'電車' | 'バス'>('電車');
-  // 入力時の「先頭0が消えない」問題を避けるため、文字列で管理
-  const [fareInput, setFareInput] = useState<string>('180');
+  // 片道運賃は最初は空欄にする
+  const [fareInput, setFareInput] = useState<string>('');
   const [days, setDays] = useState<number[]>([]);
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
