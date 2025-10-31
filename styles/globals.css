@@ -31,3 +31,15 @@ input.input,
 select.input {
   @apply h-12;
 }
+
+/* 月(type=month)だけ高さ・内側余白を強制して揃える */
+input[type="month"].input-month {
+  @apply h-12 py-2;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* iOSでの拡大防止と行の詰まり対策 */
+@supports (-webkit-touch-callout: none) {
+  input[type="month"].input-month { font-size: 16px; line-height: 1.25; }
+}

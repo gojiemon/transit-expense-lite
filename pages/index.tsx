@@ -171,7 +171,7 @@ export default function Home() {
             <label className="label">月</label>
             <input
               type="month"
-              className="input"
+              className="input input-month"
               value={month}
               onChange={(e) => setMonth(e.target.value)}
             />
