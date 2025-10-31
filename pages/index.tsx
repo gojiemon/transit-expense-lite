@@ -264,7 +264,15 @@ export default function Home() {
               pattern="[0-9]*"
               className="input"
               value={fareInput}
-              onChange={(e) => setFareInput(e.target.value.replace(/[^0-9]/g, ''))}
+              onChange={(e) => {
+                const digits = e.target.value.replace(/[^0-9]/g, '');
+                const normalized = digits.replace(/^0+(?=\d)/, ''); // 先頭ゼロを除去（単独の0は許容）
+                setFareInput(normalized);
+              }}
+              onBlur={() => {
+                const normalized = (fareInput || '').replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
+                setFareInput(normalized);
+              }}
               placeholder="例: 180"
             />
           </div>
