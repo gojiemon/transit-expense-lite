@@ -26,3 +26,8 @@ body {
   @apply text-sm font-medium text-gray-700;
 }
 
+/* 入力枠の高さを統一（textareaは除外） */
+input.input,
+select.input {
+  @apply h-12;
+}
